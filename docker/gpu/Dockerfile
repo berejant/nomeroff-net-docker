@@ -11,6 +11,5 @@ WORKDIR /var/www
 RUN git clone -b v1.1 https://github.com/ria-com/nomeroff-net.git \
   && cd nomeroff-net/ \
   && sed -i 's/^tensorflow/#&/' requirements.txt \
-  && sed -i 's/imgaug.*/imgaug==0.4.*/' requirements.txt \
   && pip install --no-cache-dir -r requirements.txt \
   && git clone https://github.com/youngwanLEE/centermask2.git
