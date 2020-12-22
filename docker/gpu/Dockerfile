@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:2.3.0-gpu
+FROM tensorflow/tensorflow:2.4.0-gpu
 
 ENV TZ=Europe/Kiev
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -8,8 +8,8 @@ RUN pip install --no-cache-dir flask waitress torch wtforms \
     && pip install --no-cache-dir git+https://github.com/facebookresearch/detectron2.git
 
 WORKDIR /var/www
-RUN git clone https://github.com/ria-com/nomeroff-net.git \
+RUN git clone -b v1.1 https://github.com/ria-com/nomeroff-net.git \
   && cd nomeroff-net/ \
   && sed -i 's/^tensorflow/#&/' requirements.txt \
-  && pip install --no-cache-dir -r requirements.txt \
-  && git clone https://github.com/youngwanLEE/centermask2.git
+  && sed -i 's/imgaug.*/imgaug==0.4.*/' requirements.txt \
+  && pip install --no-cache-dir -r requirements.txt
